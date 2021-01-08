@@ -7,9 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORM.Dapper.WebApi", "ORM.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORM.Dapper.Core", "ORM.Dapper.Core\ORM.Dapper.Core.csproj", "{6CF27371-F6AA-41F3-AE30-85735CABDD3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORM.Dapper.Application", "ORM.Dapper.Application\ORM.Dapper.Application.csproj", "{620F317C-B7B6-4046-82EF-DA1D3FF0872E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORM.Dapper.Application", "ORM.Dapper.Application\ORM.Dapper.Application.csproj", "{620F317C-B7B6-4046-82EF-DA1D3FF0872E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ORM.Dapper.Infrastructure", "ORM.Dapper.Infrastructure\ORM.Dapper.Infrastructure.csproj", "{2CE5E1D3-B1D3-4F5C-AC8E-04F59B0664DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ORM.Dapper.Infrastructure", "ORM.Dapper.Infrastructure\ORM.Dapper.Infrastructure.csproj", "{2CE5E1D3-B1D3-4F5C-AC8E-04F59B0664DA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C03EE11F-CA8B-4451-8ACB-E020EAAFD791}"
+	ProjectSection(SolutionItems) = preProject
+		README.MD = README.MD
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
