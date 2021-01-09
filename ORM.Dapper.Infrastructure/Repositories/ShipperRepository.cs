@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using ORM.Dapper.Application.Interfaces;
 using ORM.Dapper.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -24,8 +25,22 @@ namespace ORM.Dapper.Infrastructure.Repositories
             using (var connection = new SqlConnection(configuration.GetConnectionString("NorthwindContext")))
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, entity);
-                return result;
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var affectedRows = 0;
+                    try
+                    {
+                        affectedRows = await connection.ExecuteAsync(sql, entity, transaction);
+                        transaction.Commit();
+
+                        return affectedRows;
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    return affectedRows;
+                }
             }
         }
 
