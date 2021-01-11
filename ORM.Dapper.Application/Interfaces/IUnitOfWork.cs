@@ -3,5 +3,6 @@
     public interface IUnitOfWork
     {
         IShipperRepository Shippers { get; }
+        IRegionRepository Regions { get; }
     }
 }

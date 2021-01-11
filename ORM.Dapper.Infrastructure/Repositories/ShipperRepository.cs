@@ -7,9 +7,17 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace ORM.Dapper.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Encapsulates the logic required to access SHIPPER data sources.
+    /// </summary>
+    /// <seealso cref="ORM.Dapper.Application.Interfaces.IShipperRepository" />
+    /// <remarks>
+    /// This class uses System Transactions to make a code block transactional.
+    /// </remarks>
     public class ShipperRepository : IShipperRepository
     {
         private readonly IConfiguration configuration;
@@ -44,6 +52,11 @@ namespace ORM.Dapper.Infrastructure.Repositories
             }
         }
 
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public async Task<int> DeleteAsync(int id)
         {
             var sql = "DELETE FROM Shippers WHERE ShipperId = @Id";

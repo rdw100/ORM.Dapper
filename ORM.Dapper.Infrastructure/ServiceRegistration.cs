@@ -9,6 +9,7 @@ namespace ORM.Dapper.Infrastructure
         public static void AddInfrastructure(this IServiceCollection services)
         {
             services.AddTransient<IShipperRepository, ShipperRepository>();
+            services.AddTransient<IRegionRepository, RegionRepository>();
             services.AddTransient<IUnitOfWork, UnitOfWork>();
         }
     }
