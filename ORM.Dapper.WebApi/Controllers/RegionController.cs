@@ -23,6 +23,15 @@ namespace ORM.Dapper.WebApi.Controllers
             return Ok(data);
         }
 
+        // GET: api/<RegionController>/5/terr
+        [HttpGet("{id}/terr")]
+        public async Task<IActionResult> GetTerritoriesByRegion(int id)
+        {
+            var data = await unitOfWork.Regions.GetTerritoriesByRegion(id);
+            if (data == null) return Ok();
+            return Ok(data);
+        }
+
         // GET api/<RegionController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
