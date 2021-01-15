@@ -54,7 +54,6 @@ namespace ORM.Dapper.Infrastructure.Repositories
             }
         }
 
-
         public async Task<int> DeleteAsync(int id)
         {
             var sql = "DELETE FROM Shippers WHERE ShipperId = @Id";

@@ -8,7 +8,5 @@ namespace ORM.Dapper.Application.Interfaces
         Task<T> GetByIdAsync(int id);
         Task<IReadOnlyList<T>> GetAllAsync();
         Task<int> AddAsync(T entity);
-        Task<int> UpdateAsync(T entity);
-        Task<int> DeleteAsync(int id);
     }
 }

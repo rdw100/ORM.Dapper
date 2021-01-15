@@ -4,5 +4,6 @@
     {
         IShipperRepository Shippers { get; }
         IRegionRepository Regions { get; }
+        ITerritoryRepository Territories { get; }
     }
 }
