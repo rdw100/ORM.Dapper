@@ -10,6 +10,14 @@ using System.Threading.Tasks;
 
 namespace ORM.Dapper.Infrastructure.Repositories
 {
+    /// <summary>
+    /// Encapsulates the logic required to access TERRITORY data sources.
+    /// </summary>
+    /// <seealso cref="ORM.Dapper.Application.Interfaces.ITerritoryRepository" />
+    /// <remarks>
+    /// This class uses Dapper Contrib to extend Dapper CRUD with helper 
+    /// methods.  Reduces manual SQL Statements for simple tables.
+    /// </remarks>
     public class TerritoryRepository : ITerritoryRepository
     {
         private readonly IConfiguration configuration;
