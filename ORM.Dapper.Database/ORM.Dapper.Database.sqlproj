@@ -22,6 +22,7 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultSchema>dbo.Northwind</DefaultSchema>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -61,5 +62,8 @@
   <ItemGroup>
     <None Include="Stored Procedures\SaveShipper.sql" />
     <None Include="Stored Procedures\DeleteShipper.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Stored Procedures\GetShipper.sql" />
   </ItemGroup>
 </Project>

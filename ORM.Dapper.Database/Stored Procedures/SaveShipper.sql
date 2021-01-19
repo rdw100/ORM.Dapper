@@ -1,4 +1,6 @@
-﻿DROP PROCEDURE IF EXISTS [dbo].[SaveShipper]
+﻿Use Northwind
+GO
+DROP PROCEDURE IF EXISTS [dbo].[SaveShipper]
 GO
 CREATE PROCEDURE [dbo].[SaveShipper]
 	@ShipperId int output,
@@ -6,20 +8,20 @@ CREATE PROCEDURE [dbo].[SaveShipper]
     @Phone varchar (24)
 AS
 BEGIN
-	UPDATE	Shipper
+	UPDATE	Shippers
 	SET		CompanyName   = @CompanyName,
 			Phone         = @Phone
-	WHERE	ShipperId     = @ShipperId
+	WHERE	ShipperId     = @ShipperId;
 
 	IF @@ROWCOUNT = 0
 	BEGIN
-		INSERT INTO [dbo].[Shipper]
+		INSERT INTO [dbo].[Shippers]
             ([CompanyName],
              [Phone])
 		VALUES
            (@CompanyName,
             @Phone);
-		SET @ShipperId = cast(scope_identity() as int)
+		SET @ShipperId = cast(scope_identity() as int);
 	END;
 END;
 GO

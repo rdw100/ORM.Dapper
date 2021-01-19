@@ -31,7 +31,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> AddAsync(Shipper entity)
         {
-            var sql = "INSERT INTO Shippers (CompanyName,Phone) VALUES (@CompanyName,@Phone)";
+            var sql = "SaveShipper";
             using (var connection = connectionString)
             {
                 connection.Open();
@@ -40,7 +40,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
                     var affectedRows = 0;
                     try
                     {
-                        affectedRows = await connection.ExecuteAsync(sql, entity, transaction);
+                        affectedRows = await connection.ExecuteAsync(sql, entity, transaction, commandType: CommandType.StoredProcedure);
                         transaction.Commit();
 
                         return affectedRows;
@@ -56,44 +56,44 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> DeleteAsync(int id)
         {
-            var sql = "DELETE FROM Shippers WHERE ShipperId = @Id";
+            var sql = "DeleteShipper";
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, new { Id = id });
+                var result = await connection.ExecuteAsync(sql, new { ShipperId = id }, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
         public async Task<IReadOnlyList<Shipper>> GetAllAsync()
         {
-            var sql = "SELECT * FROM Shippers";
+            var sql = "GetShippers";
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Shipper>(sql);
+                var result = await connection.QueryAsync<Shipper>(sql, commandType: CommandType.StoredProcedure);
                 return result.ToList();
             }
         }
 
         public async Task<Shipper> GetByIdAsync(int id)
         {
-            var sql = "SELECT * FROM Shippers WHERE ShipperId = @Id";
+            var sql = "GetShipperByID";
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.QuerySingleOrDefaultAsync<Shipper>(sql, new { Id = id });
+                var result = await connection.QuerySingleOrDefaultAsync<Shipper>(sql, new { ShipperId = id }, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
 
         public async Task<int> UpdateAsync(Shipper entity)
         {
-            var sql = "UPDATE Shippers SET CompanyName = @CompanyName, Phone = @Phone WHERE Id = @Id";
+            var sql = "SaveShipper";
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, entity);
+                var result = await connection.ExecuteAsync(sql, entity, commandType: CommandType.StoredProcedure);
                 return result;
             }
         }
