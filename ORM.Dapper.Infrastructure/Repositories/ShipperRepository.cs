@@ -40,10 +40,12 @@ namespace ORM.Dapper.Infrastructure.Repositories
                     var affectedRows = 0;
                     try
                     {
-                        affectedRows = await connection.ExecuteAsync(sql, entity, transaction, commandType: CommandType.StoredProcedure);
+                        affectedRows = await connection.ExecuteAsync(
+                            sql, 
+                            entity, 
+                            transaction: transaction, 
+                            commandType: CommandType.StoredProcedure);
                         transaction.Commit();
-
-                        return affectedRows;
                     }
                     catch (Exception)
                     {
@@ -60,8 +62,23 @@ namespace ORM.Dapper.Infrastructure.Repositories
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, new { ShipperId = id }, commandType: CommandType.StoredProcedure);
-                return result;
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var result = 0;
+                    try
+                    {
+                        result = await connection.ExecuteAsync(sql, 
+                            new { ShipperId = id }, 
+                            transaction: transaction, 
+                            commandType: CommandType.StoredProcedure);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    return result;
+                }
             }
         }
 
@@ -71,8 +88,23 @@ namespace ORM.Dapper.Infrastructure.Repositories
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.QueryAsync<Shipper>(sql, commandType: CommandType.StoredProcedure);
-                return result.ToList();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    IEnumerable<Shipper> result = null;
+                    try
+                    {
+                        result = await connection.QueryAsync<Shipper>(
+                            sql, 
+                            transaction: transaction, 
+                            commandType: CommandType.StoredProcedure);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    return result.ToList();
+                }
             }
         }
 
@@ -82,8 +114,24 @@ namespace ORM.Dapper.Infrastructure.Repositories
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.QuerySingleOrDefaultAsync<Shipper>(sql, new { ShipperId = id }, commandType: CommandType.StoredProcedure);
-                return result;
+                using (var transaction = connection.BeginTransaction())
+                {
+                    Shipper result = null;
+                    try
+                    {
+                        result = await connection.QuerySingleOrDefaultAsync<Shipper>(
+                            sql, 
+                            new { ShipperId = id }, 
+                            transaction: transaction, 
+                            commandType: CommandType.StoredProcedure);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    return result;
+                }
             }
         }
 
@@ -93,8 +141,24 @@ namespace ORM.Dapper.Infrastructure.Repositories
             using (var connection = connectionString)
             {
                 connection.Open();
-                var result = await connection.ExecuteAsync(sql, entity, commandType: CommandType.StoredProcedure);
-                return result;
+                using (var transaction = connection.BeginTransaction())
+                {
+                    var result = 0;
+                    try
+                    {
+                        result = await connection.ExecuteAsync(
+                            sql, 
+                            entity, 
+                            transaction: transaction, 
+                            commandType: CommandType.StoredProcedure);
+                        transaction.Commit();
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                    }
+                    return result;
+                }
             }
         }
     }

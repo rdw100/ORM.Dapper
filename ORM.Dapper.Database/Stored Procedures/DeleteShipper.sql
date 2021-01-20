@@ -3,10 +3,10 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[DeleteShipper]
 GO
 CREATE PROCEDURE [dbo].[DeleteShipper]
-	@ShipperId int
+	@ShipperID int
 AS
 BEGIN
 	DELETE FROM Shippers
-	WHERE ShipperId = @ShipperId;
+	WHERE ShipperID = @ShipperID;
 SELECT @@ROWCOUNT;
 END;

@@ -3,12 +3,12 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[GetShipperByID]
 GO
 CREATE procedure [dbo].[GetShipperByID]
-	@ShipperId int
+	@ShipperID int
 AS
 BEGIN
-	SELECT [ShipperId]
+	SELECT [ShipperID]
 		  ,[CompanyName]
 		  ,[Phone]
 	  FROM [dbo].[Shippers]
-	WHERE ShipperId = @ShipperId;
+	WHERE ShipperID = @ShipperID;
 END

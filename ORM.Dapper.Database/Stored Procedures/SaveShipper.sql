@@ -3,7 +3,7 @@ GO
 DROP PROCEDURE IF EXISTS [dbo].[SaveShipper]
 GO
 CREATE PROCEDURE [dbo].[SaveShipper]
-	@ShipperId int output,
+	@ShipperID int output,
 	@CompanyName nvarchar(40),
     @Phone varchar (24)
 AS
@@ -11,7 +11,7 @@ BEGIN
 	UPDATE	Shippers
 	SET		CompanyName   = @CompanyName,
 			Phone         = @Phone
-	WHERE	ShipperId     = @ShipperId;
+	WHERE	ShipperID     = @ShipperID;
 
 	IF @@ROWCOUNT = 0
 	BEGIN
@@ -21,7 +21,7 @@ BEGIN
 		VALUES
            (@CompanyName,
             @Phone);
-		SET @ShipperId = cast(scope_identity() as int);
+		SET @ShipperID = cast(scope_identity() as int);
 	END;
 END;
 GO
