@@ -60,7 +60,6 @@
     <Folder Include="Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Stored Procedures\SaveShipper.sql" />
     <None Include="Stored Procedures\DeleteShipper.sql" />
   </ItemGroup>
   <ItemGroup>
@@ -73,5 +72,9 @@
       <SuppressMissingDependenciesErrors>False</SuppressMissingDependenciesErrors>
       <DatabaseVariableLiteralValue>master</DatabaseVariableLiteralValue>
     </ArtifactReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Stored Procedures\InsertShipper.sql" />
+    <Build Include="Stored Procedures\UpdateShipper.sql" />
   </ItemGroup>
 </Project>
