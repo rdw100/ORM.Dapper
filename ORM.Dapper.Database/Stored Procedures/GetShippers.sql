@@ -1,10 +1,15 @@
-﻿Use Northwind
+﻿USE [Northwind];
 GO
-DROP PROCEDURE IF EXISTS [dbo].[GetShippers]
+DROP PROCEDURE IF EXISTS [dbo].[GetShippers];
 GO
-CREATE procedure [dbo].[GetShippers]
-AS
+CREATE PROCEDURE [dbo].[GetShippers]
+AS 
 BEGIN
-	SELECT *
-	  FROM [dbo].[Shippers];
-END
+    SET NOCOUNT ON;
+
+    SELECT [ShipperID],[CompanyName],[Phone]
+    FROM [dbo].[Shippers];
+
+    RETURN @@ROWCOUNT;
+END;
+GO

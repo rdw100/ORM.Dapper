@@ -31,7 +31,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> AddAsync(Shipper entity)
         {
-            var sql = "SaveShipper";
+            var sql = "InsertShipper";
             using (var connection = connectionString)
             {
                 connection.Open();
@@ -137,7 +137,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> UpdateAsync(Shipper entity)
         {
-            var sql = "SaveShipper";
+            var sql = "UpdateShipper";
             using (var connection = connectionString)
             {
                 connection.Open();

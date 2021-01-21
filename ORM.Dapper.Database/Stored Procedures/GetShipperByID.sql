@@ -1,14 +1,17 @@
-﻿Use Northwind
+﻿USE [Northwind];
 GO
-DROP PROCEDURE IF EXISTS [dbo].[GetShipperByID]
+DROP PROCEDURE IF EXISTS [dbo].[GetShipperByID];
 GO
-CREATE procedure [dbo].[GetShipperByID]
-	@ShipperID int
-AS
+CREATE PROCEDURE [dbo].[GetShipperByID]
+    @ShipperID INT
+AS 
 BEGIN
-	SELECT [ShipperID]
-		  ,[CompanyName]
-		  ,[Phone]
-	  FROM [dbo].[Shippers]
-	WHERE ShipperID = @ShipperID;
-END
+    SET NOCOUNT ON;
+
+    SELECT [ShipperID],[CompanyName],[Phone]
+    FROM [dbo].[Shippers]
+    WHERE [ShipperID]=@ShipperID;
+
+    RETURN @@ROWCOUNT;
+END;
+GO
