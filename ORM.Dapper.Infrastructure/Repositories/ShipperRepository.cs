@@ -31,6 +31,15 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> AddAsync(Shipper entity)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ShipperID", 
+                            value: entity.ShipperID, 
+                            dbType: DbType.Int32, 
+                            direction: ParameterDirection.Output);
+            parameters.Add("@CompanyName", entity.CompanyName);
+            parameters.Add("@Phone", entity.Phone);
+            entity.ShipperID = parameters.Get<int>("@ShipperID");
+
             var sql = "InsertShipper";
             using (var connection = connectionString)
             {
@@ -42,7 +51,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
                     {
                         affectedRows = await connection.ExecuteAsync(
                             sql, 
-                            entity, 
+                            parameters, 
                             transaction: transaction, 
                             commandType: CommandType.StoredProcedure);
                         transaction.Commit();
@@ -137,6 +146,15 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
         public async Task<int> UpdateAsync(Shipper entity)
         {
+            var parameters = new DynamicParameters();
+            parameters.Add("@ShipperID",
+                            value: entity.ShipperID,
+                            dbType: DbType.Int32,
+                            direction: ParameterDirection.Input);
+            parameters.Add("@CompanyName", entity.CompanyName);
+            parameters.Add("@Phone", entity.Phone);
+            entity.ShipperID = parameters.Get<int>("@ShipperID");
+
             var sql = "UpdateShipper";
             using (var connection = connectionString)
             {
@@ -148,7 +166,7 @@ namespace ORM.Dapper.Infrastructure.Repositories
                     {
                         result = await connection.ExecuteAsync(
                             sql, 
-                            entity, 
+                            parameters, 
                             transaction: transaction, 
                             commandType: CommandType.StoredProcedure);
                         transaction.Commit();
