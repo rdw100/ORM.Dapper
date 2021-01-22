@@ -41,107 +41,91 @@ namespace ORM.Dapper.Infrastructure.Repositories
             entity.ShipperID = parameters.Get<int>("@ShipperID");
 
             var sql = "InsertShipper";
-            using (var connection = connectionString)
+            using var connection = connectionString;
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            var affectedRows = 0;
+            try
             {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    var affectedRows = 0;
-                    try
-                    {
-                        affectedRows = await connection.ExecuteAsync(
-                            sql, 
-                            parameters, 
-                            transaction: transaction, 
-                            commandType: CommandType.StoredProcedure);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
-                    return affectedRows;
-                }
+                affectedRows = await connection.ExecuteAsync(
+                    sql,
+                    parameters,
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure);
+                transaction.Commit();
             }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
+            return affectedRows;
         }
 
         public async Task<int> DeleteAsync(int id)
         {
             var sql = "DeleteShipper";
-            using (var connection = connectionString)
+            using var connection = connectionString;
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            var result = 0;
+            try
             {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    var result = 0;
-                    try
-                    {
-                        result = await connection.ExecuteAsync(sql, 
-                            new { ShipperId = id }, 
-                            transaction: transaction, 
-                            commandType: CommandType.StoredProcedure);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
-                    return result;
-                }
+                result = await connection.ExecuteAsync(sql,
+                    new { ShipperId = id },
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure);
+                transaction.Commit();
             }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
+            return result;
         }
 
         public async Task<IReadOnlyList<Shipper>> GetAllAsync()
         {
             var sql = "GetShippers";
-            using (var connection = connectionString)
+            using var connection = connectionString;
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            IEnumerable<Shipper> result = null;
+            try
             {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    IEnumerable<Shipper> result = null;
-                    try
-                    {
-                        result = await connection.QueryAsync<Shipper>(
-                            sql, 
-                            transaction: transaction, 
-                            commandType: CommandType.StoredProcedure);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
-                    return result.ToList();
-                }
+                result = await connection.QueryAsync<Shipper>(
+                    sql,
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure);
+                transaction.Commit();
             }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
+            return result.ToList();
         }
 
         public async Task<Shipper> GetByIdAsync(int id)
         {
             var sql = "GetShipperByID";
-            using (var connection = connectionString)
+            using var connection = connectionString;
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            Shipper result = null;
+            try
             {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    Shipper result = null;
-                    try
-                    {
-                        result = await connection.QuerySingleOrDefaultAsync<Shipper>(
-                            sql, 
-                            new { ShipperId = id }, 
-                            transaction: transaction, 
-                            commandType: CommandType.StoredProcedure);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
-                    return result;
-                }
+                result = await connection.QuerySingleOrDefaultAsync<Shipper>(
+                    sql,
+                    new { ShipperId = id },
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure);
+                transaction.Commit();
             }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
+            return result;
         }
 
         public async Task<int> UpdateAsync(Shipper entity)
@@ -156,28 +140,24 @@ namespace ORM.Dapper.Infrastructure.Repositories
             entity.ShipperID = parameters.Get<int>("@ShipperID");
 
             var sql = "UpdateShipper";
-            using (var connection = connectionString)
+            using var connection = connectionString;
+            connection.Open();
+            using var transaction = connection.BeginTransaction();
+            var result = 0;
+            try
             {
-                connection.Open();
-                using (var transaction = connection.BeginTransaction())
-                {
-                    var result = 0;
-                    try
-                    {
-                        result = await connection.ExecuteAsync(
-                            sql, 
-                            parameters, 
-                            transaction: transaction, 
-                            commandType: CommandType.StoredProcedure);
-                        transaction.Commit();
-                    }
-                    catch (Exception)
-                    {
-                        transaction.Rollback();
-                    }
-                    return result;
-                }
+                result = await connection.ExecuteAsync(
+                    sql,
+                    parameters,
+                    transaction: transaction,
+                    commandType: CommandType.StoredProcedure);
+                transaction.Commit();
             }
+            catch (Exception)
+            {
+                transaction.Rollback();
+            }
+            return result;
         }
     }
 }
