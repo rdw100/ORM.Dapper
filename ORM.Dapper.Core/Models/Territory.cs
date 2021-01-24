@@ -11,6 +11,7 @@ namespace ORM.Dapper.Core.Models
         public int RegionID { get; set; }
         [Computed]
         public bool IsNew => (this.TerritoryID == default);
+        [Computed]
         public bool IsDeleted { get; set; }
     }
 }

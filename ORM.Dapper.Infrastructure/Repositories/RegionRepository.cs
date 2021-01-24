@@ -186,11 +186,11 @@ namespace ORM.Dapper.Infrastructure.Repositories
 
                 if (terr.IsNew)
                 {
-                    this.Add(terr); // TODO: Make async.
+                    await this.AddAsync(terr);
                 }
                 else
                 {
-                    this.Update(terr); // TODO: Make async.
+                    await this.Update(terr);
                 }
             }
 
@@ -202,19 +202,19 @@ namespace ORM.Dapper.Infrastructure.Repositories
             transaction.Complete();
         }
 
-        public Territory Add(Territory territory)
+        public async Task<Territory> AddAsync(Territory territory)
         {
             var sql = "INSERT INTO Territory (TerritoryId, TerritoryDescription, RegionID)" +
                 "VALUES (@TerritoryID, @TerritoryDescription, @RegionId); " +
                 "SELECT CAST(SCOPE_IDENTITY() as int)";
-            var id = this.connectionString.Query<int>(sql, territory).Single();
+            var id = await this.connectionString.QuerySingleAsync<int>(sql, territory);
             territory.TerritoryID = id;
             return territory;
         }
 
-        public Territory Update(Territory territory)
+        public async Task<Territory> Update(Territory territory)
         {
-            this.connectionString.Execute("UPDATE Territory " +
+            await this.connectionString.ExecuteAsync("UPDATE Territory " +
                 "SET TerritoryDescription = @TerritoryDescription" +
                 "    RegionId = @RegionID" +
                 "WHERE TerritoryID = @TerritoryId");
